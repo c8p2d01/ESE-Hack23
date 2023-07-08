@@ -1,4 +1,4 @@
-#! / usr / bin / python3
+#! /usr/bin/python3
 # Reed.py file
 import time, sys
 import RPi. GPIO as GPIO
