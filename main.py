@@ -24,19 +24,19 @@ GPIO.setup(reed_links_innen_pin, GPIO.IN)
 GPIO.setup(reed_rechts_innen_pin, GPIO.IN)
 GPIO.setup(reed_rechts_aussen_pin, GPIO.IN)
 
-def callback_function(reed_links_aussen_pin):
-	print("Zug")
-def callback_function(reed_links_innen_pin):
-	print("Zug")
-def callback_function(reed_rechts_innen_pin):
-	print("Zug")
-def callback_function(reed_rechts_aussen_pin):
-	print("Zug")
+def callback_function1(reed_links_aussen_pin):
+	print("links aussen")
+def callback_function2(reed_links_innen_pin):
+	print("links innen")
+def callback_function3(reed_rechts_innen_pin):
+	print("rechts innen")
+def callback_function4(reed_rechts_aussen_pin):
+	print("rechts aussen")
 
-GPIO.add_event_detect(reed_links_aussen_pin, GPIO.FALLING, callback=callback_function, bouncetime=200)
-GPIO.add_event_detect(reed_links_innen_pin, GPIO.FALLING, callback=callback_function, bouncetime=200)
-GPIO.add_event_detect(reed_rechts_innen_pin, GPIO.FALLING, callback=callback_function, bouncetime=200)
-GPIO.add_event_detect(reed_rechts_aussen_pin, GPIO.FALLING, callback=callback_function, bouncetime=200)
+GPIO.add_event_detect(reed_links_aussen_pin, GPIO.FALLING, callback=callback_function1, bouncetime=200)
+GPIO.add_event_detect(reed_links_innen_pin, GPIO.FALLING, callback=callback_function2, bouncetime=200)
+GPIO.add_event_detect(reed_rechts_innen_pin, GPIO.FALLING, callback=callback_function3, bouncetime=200)
+GPIO.add_event_detect(reed_rechts_aussen_pin, GPIO.FALLING, callback=callback_function4, bouncetime=200)
 
 #Bahnuebergang sichern
 # Straßen-LED einschalten
