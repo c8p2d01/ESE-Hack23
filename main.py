@@ -20,17 +20,7 @@ bahn_led_rechts = LED(16)
 # Led Strasse
 strassen_leds = LED(20)
 
-def bahnlicht_freigabe(seite):
-	print("Bahn kann kommen\n")
-	if (seite == "links"):
-		bahn_led_links.blink(1, 1)
-	else:
-		bahn_led_rechts.blink(1, 1)
-
-def bahnlicht_ende(seite):
-	print("Bahn ist durch\n")
-	bahn_led_links.off()
-	bahn_led_rechts.off()
+#Servo
 
 class Schranke():
   def __init__(self,pinMotor,pinKontakt):
@@ -49,6 +39,18 @@ class Schranke():
     p.ChangeDutyCycle(0)
   def check(self):
     pass
+
+def bahnlicht_freigabe(seite):
+	print("Bahn kann kommen\n")
+	if (seite == "links"):
+		bahn_led_links.blink(1, 1)
+	else:
+		bahn_led_rechts.blink(1, 1)
+
+def bahnlicht_ende():
+	print("Bahn ist durch\n")
+	bahn_led_links.off()
+	bahn_led_rechts.off()
 
 class bahn_sensor:
 	def __init__(self,seite):
@@ -126,8 +128,6 @@ def	Fehlerzustand():
 	bahn_led_rechts.off()
 	#Schranken zu?
 
-#Servo
-
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(reed_links_aussen_pin, GPIO.IN)
 GPIO.setup(reed_links_innen_pin, GPIO.IN)
@@ -142,13 +142,13 @@ def callback_function2(t1):
 	print("reed links innen\n")
 	bahnSensorLinks.activate_innen()
 	# strassenschranken_switch()
-def callback_function3(t1):
-	print("reed rechts aussen\n")
-	bahnSensorRechts.activate_aussen()
-	strassenlicht_switch()
-def callback_function4(t1):
+def callback_function3():
 	print("reed rechts innen\n")
 	bahnSensorRechts.activate_innen()
+	strassenlicht_switch()
+def callback_function4():
+	print("reed rechts aussen\n")
+	bahnSensorRechts.activate_aussen()
 	# strassenschranken_switch()
 
 GPIO.add_event_detect(reed_links_aussen_pin, GPIO.FALLING, callback=callback_function1, bouncetime=200)
