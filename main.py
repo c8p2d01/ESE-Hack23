@@ -33,22 +33,29 @@ def bahnlicht_ende(seite):
 	bahn_led_rechts.off()
 
 class Schranke():
-  def __init__(self,pinMotor,pinKontakt):
-    self.open = False
-    self.pinMotor = pinMotor
-    self.pinKontakt = pinKontakt
-    GPIO.setup(pinMotor, GPIO.OUT)
+    def __init__(self, pinMotor, pinKontakt):
+        self.isOpen = False
+        self.pinMotor = pinMotor
+        self.pinKontakt = pinKontakt
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.pinMotor, GPIO.OUT)
+        #GPIO.setup(self.pinKontakt, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
-  def open(self):
-    p = GPIO.PWM(self.pinMotor, 50)  # GPIO 17 als PWM mit 50Hz
-    p.start(0)
-    p.ChangeDutyCycle(7.5)
-  def close(self):
-    p = GPIO.PWM(self.pinMotor, 50)  # GPIO 17 als PWM mit 50Hz
-    p.start(0)
-    p.ChangeDutyCycle(0)
-  def check(self):
-    pass
+        self.p = GPIO.PWM(self.pinMotor, 50)
+        self.p.start(3.75)
+
+    def open(self):
+         # GPIO 17 als PWM mit 50Hz
+
+        self.p.ChangeDutyCycle(3.75)
+
+    def close(self): # GPIO 17 als PWM mit 50Hz
+
+        self.p.ChangeDutyCycle(7.5)
+
+    def check(self):
+        #if GPIO.
+        pass
 
 class bahn_sensor:
 	def __init__(self,seite):
