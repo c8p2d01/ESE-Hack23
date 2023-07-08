@@ -57,7 +57,7 @@ class bahn_sensor:
 		self.status_aussen = 0
 		self.activation_aussen = time.time()
 		self.name = seite
-	
+
 	def reset(self):
 		self.status_aussen = 0
 		self.status_innen = 0
@@ -74,7 +74,7 @@ class bahn_sensor:
 			else:
 				bahnlicht_ende(self.name)
 			self.reset()
-	
+
 	def activate_aussen(self):
 		self.status_aussen = 1
 		self.activate_aussen = time.time()
@@ -112,16 +112,16 @@ def	strassenschranken_switch():
 		innen = True
 
 def	startup():
-	strassen_leds.on
+	strassen_leds.on()
 	bahn_led_links.blink(1,1)
 	bahn_led_rechts.blink(1,1)
 	time.sleep(3)
-	strassen_leds.off
+	strassen_leds.off()
 	bahn_led_links.off()
 	bahn_led_rechts.off()
 
 def	Fehlerzustand():
-	strassen_leds.on
+	strassen_leds.on()
 	bahn_led_links.off()
 	bahn_led_rechts.off()
 	#Schranken zu?
@@ -134,19 +134,19 @@ GPIO.setup(reed_links_innen_pin, GPIO.IN)
 GPIO.setup(reed_rechts_innen_pin, GPIO.IN)
 GPIO.setup(reed_rechts_aussen_pin, GPIO.IN)
 
-def callback_function1():
+def callback_function1(t1):
 	print("reed links aussen\n")
 	bahnSensorLinks.activate_aussen()
 	strassenlicht_switch()
-def callback_function2():
+def callback_function2(t1):
 	print("reed links innen\n")
 	bahnSensorLinks.activate_innen()
 	# strassenschranken_switch()
-def callback_function3():
+def callback_function3(t1):
 	print("reed rechts aussen\n")
 	bahnSensorRechts.activate_aussen()
 	strassenlicht_switch()
-def callback_function4():
+def callback_function4(t1):
 	print("reed rechts innen\n")
 	bahnSensorRechts.activate_innen()
 	# strassenschranken_switch()
