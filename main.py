@@ -3,9 +3,8 @@ import RPi.GPIO as GPIO
 
 
 #Pin Belegung
-#23 statt 15 bzw 11 statt 22
 #Reed
-reed_links_aussen = 22
+reed_links_aussen = 11
 reed_links_innen = 23
 reed_rechts_innen = 24
 reed_rechts_aussen = 25
