@@ -21,14 +21,14 @@ bahn_led_rechts = LED(16)
 strassen_leds = LED(20)
 
 def bahnlicht_freigabe(seite):
-	print("\e[38;5;196mBahn kann kommen\n\e[0m")
+	print("Bahn kann kommen\n")
 	if (seite == "links"):
 		bahn_led_links.blink(1, 1)
 	else:
 		bahn_led_rechts.blink(1, 1)
 
 def bahnlicht_ende(seite):
-	print("\e[38;5;42mBahn ist durch\n\e[0m")
+	print("Bahn ist durch\n")
 	bahn_led_links.off()
 	bahn_led_rechts.off()
 
@@ -57,6 +57,10 @@ class bahn_sensor:
 		self.status_aussen = 0
 		self.activation_aussen = time.time()
 		self.name = seite
+	
+	def reset(self):
+		self.status_aussen = 0
+		self.status_innen = 0
 
 	def checkTravel(self):
 		# currTime = time.time()
@@ -69,6 +73,7 @@ class bahn_sensor:
 				bahnlicht_freigabe(self.name)
 			else:
 				bahnlicht_ende(self.name)
+			self.reset()
 	
 	def activate_aussen(self):
 		self.status_aussen = 1
@@ -89,6 +94,7 @@ aussen:bool = False
 
 def	strassenlicht_switch():
 	global aussen
+	print("		Licht switched\n")
 	if (aussen):
 		strassen_leds.off()
 		aussen = False
@@ -105,6 +111,15 @@ def	strassenschranken_switch():
 		#schranke zu
 		innen = True
 
+def	startup():
+	strassen_leds.on
+	bahn_led_links.blink(1,1)
+	bahn_led_rechts.blink(1,1)
+	time.sleep(3)
+	strassen_leds.off
+	bahn_led_links.off()
+	bahn_led_rechts.off()
+
 def	Fehlerzustand():
 	strassen_leds.on
 	bahn_led_links.off()
@@ -120,18 +135,21 @@ GPIO.setup(reed_rechts_innen_pin, GPIO.IN)
 GPIO.setup(reed_rechts_aussen_pin, GPIO.IN)
 
 def callback_function1():
-	print("reed lonks aussen\n")
+	print("reed links aussen\n")
 	bahnSensorLinks.activate_aussen()
 	strassenlicht_switch()
 def callback_function2():
+	print("reed links innen\n")
 	bahnSensorLinks.activate_innen()
-	strassenschranken_switch()
+	# strassenschranken_switch()
 def callback_function3():
+	print("reed rechts aussen\n")
 	bahnSensorRechts.activate_aussen()
 	strassenlicht_switch()
 def callback_function4():
+	print("reed rechts innen\n")
 	bahnSensorRechts.activate_innen()
-	strassenschranken_switch()
+	# strassenschranken_switch()
 
 GPIO.add_event_detect(reed_links_aussen_pin, GPIO.FALLING, callback=callback_function1, bouncetime=200)
 GPIO.add_event_detect(reed_links_innen_pin, GPIO.FALLING, callback=callback_function2, bouncetime=200)
@@ -159,3 +177,5 @@ GPIO.add_event_detect(reed_rechts_aussen_pin, GPIO.FALLING, callback=callback_fu
 # bahn_led_rechts.off()
 # bahn_led_links.off()
 
+while True:
+	pass
