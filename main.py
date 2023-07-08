@@ -30,13 +30,35 @@ def bahnlicht_ende(seite):
 	bahn_led_links.off()
 	bahn_led_rechts.off()
 
-class	bahn_sensor:
-	def __init__(self, seite):
-		self.name = seite
+
+
+class Schranke():
+  def __init__(self,pinMotor,pinKontakt):
+    self.open = False
+    self.pinMotor = pinMotor
+    self.pinKontakt = pinKontakt
+    GPIO.setup(pinMotor, GPIO.OUT)
+
+
+
+  def open(self):
+    p = GPIO.PWM(self.pinMotor, 50)  # GPIO 17 als PWM mit 50Hz
+    p.start(0)
+    p.ChangeDutyCycle(7.5)
+  def close(self):
+    p = GPIO.PWM(self.pinMotor, 50)  # GPIO 17 als PWM mit 50Hz
+    p.start(0)
+    p.ChangeDutyCycle(0)
+  def check(self):
+    pass
+
+class bahn_sensor:
+	def __init__(self,seite):
 		self.status_innen = 0
 		self.activation_innen = time.time()
 		self.status_aussen = 0
 		self.activation_aussen = time.time()
+		self.name = seite
 
 	def checkTravel(self):
 		currTime = time.time()
@@ -68,6 +90,7 @@ innen:bool = False
 aussen:bool = False
 
 def	strassenlicht_switch():
+	global aussen
 	if (aussen):
 		strassen_leds.off()
 		aussen = False
@@ -76,6 +99,7 @@ def	strassenlicht_switch():
 		aussen = True
 
 def	strassenschranken_switch():
+	global innen
 	if (innen):
 		#schranke auf
 		innen = False

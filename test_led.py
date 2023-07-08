@@ -14,6 +14,7 @@ def test():
 
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(led, GPIO.OUT)
+    GPO
 
     try:
         while True:
