@@ -51,6 +51,7 @@ class Schranke():
         pass
 
 def bahnlicht_freigabe(seite):
+	#schranke 1, 2 -> check if closed
 	print("Bahn kann kommen\n")
 	if (seite == "links"):
 		bahn_led_links.blink(1, 1)
@@ -120,10 +121,12 @@ def	strassenlicht_switch():
 def	strassenschranken_switch():
 	global innen
 	if (innen):
-		#schranke auf
+		SchrankeH.open()
+		SchrankeV.open()
 		innen = False
 	else:
-		#schranke zu
+		SchrankeV.close()
+		SchrankeH.close()
 		innen = True
 
 def	startup():
