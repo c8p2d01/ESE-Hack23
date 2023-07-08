@@ -218,7 +218,7 @@ GPIO.add_event_detect(reed_rechts_aussen_pin, GPIO.FALLING, callback=callback_fu
 # bahn_led_rechts.off()
 # bahn_led_links.off()
 
-startup()
+#startup()
 
 while True:
     pass
