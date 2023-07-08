@@ -11,8 +11,9 @@ class Schranke():
         self.pinMotor = pinMotor
         self.pinKontakt = pinKontakt
         GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.pinKontakt, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(self.pinMotor, GPIO.OUT)
-        #GPIO.setup(self.pinKontakt, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+
 
         self.p = GPIO.PWM(self.pinMotor, 50)
         self.p.start(3.75)
@@ -27,11 +28,15 @@ class Schranke():
         self.p.ChangeDutyCycle(7.5)
 
     def check(self):
-        #if GPIO.
-        pass
+        if GPIO.input(self.pinKontakt) == GPIO.HIGH:
+            self.isOpen = True
+        else:
+            self.isOpen = False
+
 
 if __name__ == '__main__':
-    s = Schranke(servoPIN,12)
+    s = Schranke(servoPIN,11)
+
     try:
         while True:
             s.open()
