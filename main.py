@@ -102,7 +102,7 @@ class bahn_sensor:
             if (self.activation_aussen > self.activation_innen):
                 bahnlicht_freigabe(self.name)
             else:
-                bahnlicht_ende(self.name)
+                bahnlicht_ende()
             self.reset()
 
     def activate_aussen(self):
@@ -128,7 +128,7 @@ aussen:bool = False
 def	strassenlicht_switch():
     global aussen
     print("		Licht switched\n")
-    if (aussen):
+    if (aussen == True):
         strassen_leds.off()
         aussen = False
     else:
