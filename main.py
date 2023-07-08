@@ -17,6 +17,9 @@ reed_rechts_aussen_pin = 25
 bahn_led_links = LED(4)
 bahn_led_rechts = LED(16)
 
+#Schranken
+schranke_vorne = 12
+schranke_hinten = 27
 # Led Strasse
 strassen_leds = LED(20)
 
@@ -91,9 +94,12 @@ class bahn_sensor:
 		self.status_innen = 1
 		self.activate_innen = time.time()
 		self.checkTravel()
-
+#Initialisierung
 bahnSensorLinks = bahn_sensor("links")
 bahnSensorRechts = bahn_sensor("rechts")
+SchrankeV = Schranke(schranke_vorne,99)
+SchrankeH = Schranke(schranke_hinten,99)
+
 
 # False -> kein Zug im Bahnübergang, True -> Bahn im Zugübergang
 innen:bool = False
@@ -126,6 +132,12 @@ def	startup():
 	strassen_leds.off()
 	bahn_led_links.off()
 	bahn_led_rechts.off()
+	SchrankeV.close()
+	SchrankeH.close()
+	SchrankeH.open()
+	SchrankeV.open()
+
+
 
 def	Fehlerzustand():
 	strassen_leds.on()
@@ -133,7 +145,7 @@ def	Fehlerzustand():
 	bahn_led_rechts.off()
 	#Schranken zu?
 
-#Servo
+
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(reed_links_aussen_pin, GPIO.IN)
