@@ -23,13 +23,20 @@ bahn_led_rechts = LED(16)
 strassen_leds.on()
 
 #wenn der Bahnübergang gesichert ist, dann die richtige Richtung mit Blinklicht freigeben
+richtung = getDirection()
 
-# Bahn-LED im Verhältnis 1 Sekunde zu 1 Sekunden blinken lassen
-bahn_led_links.blink(1,1)
+if richtung == links:
+  # Bahn-LED im Verhältnis 1 Sekunde zu 1 Sekunden blinken lassen
+  bahn_led_links.blink(1,1)
+elif richtung == rechts:
+  # Bahn-LED im Verhältnis 1 Sekunde zu 1 Sekunden blinken lassen
+  bahn_led_rechts.blink(1,1)
 
-# Bahn-LED im Verhältnis 1 Sekunde zu 1 Sekunden blinken lassen
-bahn_led_rechts.blink(1,1)
+# Signal geben wenn der Bahnübergang frei ist
 
 #Bahnuebergang freischalten, wenn der Bahnuebergang frei ist
 # Straßen-LED ausschalten
 strassen_leds.off()
+# Bahn-LEDs ausschalten
+bahn_led_rechts.off()
+bahn_led_links.off()
