@@ -18,14 +18,18 @@ bahn_led_rechts = LED(16)
 
 #Servo
 
+#Bahnuebergang sichern
 # Straßen-LED einschalten
 strassen_leds.on()
 
-# Straßen-LED ausschalten
-strassen_leds.off()
+#wenn der Bahnübergang gesichert ist, dann die richtige Richtung mit Blinklicht freigeben
 
 # Bahn-LED im Verhältnis 1 Sekunde zu 1 Sekunden blinken lassen
 bahn_led_links.blink(1,1)
 
 # Bahn-LED im Verhältnis 1 Sekunde zu 1 Sekunden blinken lassen
 bahn_led_rechts.blink(1,1)
+
+#Bahnuebergang freischalten, wenn der Bahnuebergang frei ist
+# Straßen-LED ausschalten
+strassen_leds.off()
