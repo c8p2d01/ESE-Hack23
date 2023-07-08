@@ -18,6 +18,26 @@ bahn_led_rechts = LED(16)
 
 #Servo
 
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(reed_links_aussen_pin, GPIO.IN)
+GPIO.setup(reed_links_innen_pin, GPIO.IN)
+GPIO.setup(reed_rechts_innen_pin, GPIO.IN)
+GPIO.setup(reed_rechts_aussen_pin, GPIO.IN)
+
+def callback_function(reed_links_aussen_pin):
+	print("Zug")
+def callback_function(reed_links_innen_pin):
+	print("Zug")
+def callback_function(reed_rechts_innen_pin):
+	print("Zug")
+def callback_function(reed_rechts_aussen_pin):
+	print("Zug")
+
+GPIO.add_event_detect(reed_links_aussen_pin, GPIO.FALLING, callback=callback_function, bouncetime=200)
+GPIO.add_event_detect(reed_links_innen_pin, GPIO.FALLING, callback=callback_function, bouncetime=200)
+GPIO.add_event_detect(reed_rechts_innen_pin, GPIO.FALLING, callback=callback_function, bouncetime=200)
+GPIO.add_event_detect(reed_rechts_aussen_pin, GPIO.FALLING, callback=callback_function, bouncetime=200)
+
 #Bahnuebergang sichern
 # Straßen-LED einschalten
 strassen_leds.on()
@@ -41,4 +61,6 @@ strassen_leds.off()
 bahn_led_rechts.off()
 bahn_led_links.off()
 
-class 
+class bahn_detection
+	def __init__(self, reed_innen, reed_aussen)
+		self.name = 
