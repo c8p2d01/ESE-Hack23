@@ -38,3 +38,5 @@ strassen_leds.off()
 # Bahn-LEDs ausschalten
 bahn_led_rechts.off()
 bahn_led_links.off()
+
+class 
