@@ -17,28 +17,38 @@ reed_rechts_aussen_pin = 25
 bahn_led_links = LED(4)
 bahn_led_rechts = LED(16)
 
+#Schranken
+schranke_vorne = 12
+schranke_hinten = 27
 # Led Strasse
 strassen_leds = LED(20)
 
 #Servo
 
 class Schranke():
-  def __init__(self,pinMotor,pinKontakt):
-    self.open = False
-    self.pinMotor = pinMotor
-    self.pinKontakt = pinKontakt
-    GPIO.setup(pinMotor, GPIO.OUT)
+    def __init__(self, pinMotor, pinKontakt):
+        self.isOpen = False
+        self.pinMotor = pinMotor
+        self.pinKontakt = pinKontakt
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.pinMotor, GPIO.OUT)
+        #GPIO.setup(self.pinKontakt, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
-  def open(self):
-    p = GPIO.PWM(self.pinMotor, 50)  # GPIO 17 als PWM mit 50Hz
-    p.start(0)
-    p.ChangeDutyCycle(7.5)
-  def close(self):
-    p = GPIO.PWM(self.pinMotor, 50)  # GPIO 17 als PWM mit 50Hz
-    p.start(0)
-    p.ChangeDutyCycle(0)
-  def check(self):
-    pass
+        self.p = GPIO.PWM(self.pinMotor, 50)
+        self.p.start(3.75)
+
+    def open(self):
+         # GPIO 17 als PWM mit 50Hz
+
+        self.p.ChangeDutyCycle(3.75)
+
+    def close(self): # GPIO 17 als PWM mit 50Hz
+
+        self.p.ChangeDutyCycle(7.5)
+
+    def check(self):
+        #if GPIO.
+        pass
 
 def bahnlicht_freigabe(seite):
 	print("Bahn kann kommen\n")
@@ -86,9 +96,12 @@ class bahn_sensor:
 		self.status_innen = 1
 		self.activate_innen = time.time()
 		self.checkTravel()
-
+#Initialisierung
 bahnSensorLinks = bahn_sensor("links")
 bahnSensorRechts = bahn_sensor("rechts")
+SchrankeV = Schranke(schranke_vorne,99)
+SchrankeH = Schranke(schranke_hinten,99)
+
 
 # False -> kein Zug im Bahnübergang, True -> Bahn im Zugübergang
 innen:bool = False
@@ -121,6 +134,12 @@ def	startup():
 	strassen_leds.off()
 	bahn_led_links.off()
 	bahn_led_rechts.off()
+	SchrankeV.close()
+	SchrankeH.close()
+	SchrankeH.open()
+	SchrankeV.open()
+
+
 
 def	Fehlerzustand():
 	strassen_leds.on()
