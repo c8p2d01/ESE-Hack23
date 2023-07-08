@@ -32,6 +32,8 @@ elif richtung == rechts:
   # Bahn-LED im Verhältnis 1 Sekunde zu 1 Sekunden blinken lassen
   bahn_led_rechts.blink(1,1)
 
+# Signal geben wenn der Bahnübergang frei ist
+
 #Bahnuebergang freischalten, wenn der Bahnuebergang frei ist
 # Straßen-LED ausschalten
 strassen_leds.off()
