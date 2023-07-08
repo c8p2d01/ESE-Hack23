@@ -4,7 +4,7 @@ import time
 from gpiozero import LED #Fuer Steuerung der Lampen
 
 #Makros
-sensor_timeout = 3
+# sensor_timeout = 3000.0
 
 #Pin Belegung
 #Reed
@@ -21,16 +21,16 @@ bahn_led_rechts = LED(16)
 strassen_leds = LED(20)
 
 def bahnlicht_freigabe(seite):
+	print("\e[38;5;196mBahn kann kommen\n\e[0m")
 	if (seite == "links"):
 		bahn_led_links.blink(1, 1)
 	else:
 		bahn_led_rechts.blink(1, 1)
 
 def bahnlicht_ende(seite):
+	print("\e[38;5;42mBahn ist durch\n\e[0m")
 	bahn_led_links.off()
 	bahn_led_rechts.off()
-
-
 
 class Schranke():
   def __init__(self,pinMotor,pinKontakt):
@@ -38,8 +38,6 @@ class Schranke():
     self.pinMotor = pinMotor
     self.pinKontakt = pinKontakt
     GPIO.setup(pinMotor, GPIO.OUT)
-
-
 
   def open(self):
     p = GPIO.PWM(self.pinMotor, 50)  # GPIO 17 als PWM mit 50Hz
@@ -61,11 +59,11 @@ class bahn_sensor:
 		self.name = seite
 
 	def checkTravel(self):
-		currTime = time.time()
-		if (self.activation_aussen + sensor_timeout > currTime):
-			self.status_aussen = 0
-		if (self.activation_innen + sensor_timeout > currTime):
-			self.status_innen = 0
+		# currTime = time.time()
+		# if (self.activation_aussen + sensor_timeout > currTime):
+		# 	self.status_aussen = 0
+		# if (self.activation_innen + sensor_timeout > currTime):
+		# 	self.status_innen = 0
 		if (self.status_aussen == 1 and self.status_innen == 1):
 			if (self.activation_aussen > self.activation_innen):
 				bahnlicht_freigabe(self.name)
@@ -122,6 +120,7 @@ GPIO.setup(reed_rechts_innen_pin, GPIO.IN)
 GPIO.setup(reed_rechts_aussen_pin, GPIO.IN)
 
 def callback_function1():
+	print("reed lonks aussen\n")
 	bahnSensorLinks.activate_aussen()
 	strassenlicht_switch()
 def callback_function2():
